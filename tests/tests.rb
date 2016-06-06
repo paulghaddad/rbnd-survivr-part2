@@ -9,10 +9,10 @@ require_relative "jury_test"
 
 # #3
 require_relative "tribe_test"
-#
+
 # #4
-# require_relative "game_test"
-#
+require_relative "game_test"
+
 # #5
 # require_relative "survivr_test"
 

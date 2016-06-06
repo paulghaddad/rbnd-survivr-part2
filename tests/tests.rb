@@ -3,12 +3,12 @@
 
 #1
 require_relative "contestant_test" #once all the tests here pass, uncomment the next line, and so on.
-#
+
 # #2
-# require_relative "jury_test"
-#
+require_relative "jury_test"
+
 # #3
-# require_relative "tribe_test"
+require_relative "tribe_test"
 #
 # #4
 # require_relative "game_test"

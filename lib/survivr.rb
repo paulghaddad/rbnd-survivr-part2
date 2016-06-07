@@ -23,11 +23,13 @@ def phase_one(game)
   eliminated_contestants = 0
   8.times do
     tribe_with_immunity = game.immunity_challenge
+
     tribe_for_tribal_council = game.tribes.reject do |tribe|
       tribe == tribe_with_immunity
     end
 
-    eliminated_contestant = tribe_for_tribal_council[0].members.sample
+    immune_contestant = tribe_for_tribal_council[0].members.sample
+    eliminated_contestant = tribe_for_tribal_council[0].tribal_council(immune: immune_contestant)
     tribe_for_tribal_council[0].members.delete(eliminated_contestant)
     eliminated_contestants += 1
   end

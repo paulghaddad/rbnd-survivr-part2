@@ -19,18 +19,18 @@ class TestSurvivr < Minitest::Test
 
     # Create a new game of Survivor
     @borneo = Game.new(@coyopa, @hunapu)
-    @merge_tribe = @borneo.merge("Cello")
     @jury = Jury.new
   end
 
   def test_phase_one
-    assert_equal 8, phase_one
+    assert_equal 8, phase_one(@borneo)
   end
 
-  # def test_phase_two
-  #   assert_equal 3, phase_two
-  # end
-  #
+  def test_phase_two
+    @merge_tribe = @borneo.merge("Cello")
+    # assert_equal 3, phase_two(@borneo)
+  end
+
   # def test_phase_three
   #   assert_equal 7, phase_three
   # end

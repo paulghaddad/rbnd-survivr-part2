@@ -1,6 +1,7 @@
 require "pry"
 class Game
-  attr_reader :tribes
+  attr_reader :merged_tribe
+  attr_accessor :tribes
 
   def initialize(*tribes)
     @tribes = tribes
@@ -19,7 +20,14 @@ class Game
   end
 
   def merge(merged_tribe_name)
-    Tribe.new(name: merged_tribe_name, members: all_game_contestants)
+    merged_tribe = Tribe.new(name: merged_tribe_name, members: all_game_contestants)
+    clear_tribes
+    add_tribe(merged_tribe)
+    merged_tribe
+  end
+
+  def individual_immunity_challenge
+    tribes.first.members.sample
   end
 
   private

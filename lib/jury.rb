@@ -20,7 +20,7 @@ class Jury
 
   def report_votes(finalist_votes)
     finalist_votes.each do |finalist, votes|
-      puts "Jury votes for #{finalist}: #{votes}"
+      puts "Jury votes for #{finalist}: #{votes}".red
     end
   end
 

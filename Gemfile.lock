@@ -1,0 +1,16 @@
+PATH
+  remote: ../rbnd-survivr-part1
+  specs:
+    colorizr (0.0.4)
+
+GEM
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  colorizr!
+
+BUNDLED WITH
+   1.12.4

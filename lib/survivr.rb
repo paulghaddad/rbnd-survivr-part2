@@ -2,6 +2,7 @@ require_relative "game"
 require_relative "tribe"
 require_relative "contestant"
 require_relative "jury"
+require "colorizr"
 
 #After your tests pass, uncomment this code below
 #=========================================================
@@ -94,4 +95,4 @@ phase_three(@borneo, @jury) #7 eliminations become jury members
 finalists = @merge_tribe.members #set finalists
 vote_results = @jury.cast_votes(finalists) #Jury members report votes
 @jury.report_votes(vote_results) #Jury announces their votes
-puts "#{@jury.announce_winner(vote_results)} is the winner!" #Jury announces final winner
+puts "#{@jury.announce_winner(vote_results)} is the winner!".green #Jury announces final winner

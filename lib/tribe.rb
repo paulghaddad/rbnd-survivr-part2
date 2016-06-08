@@ -1,3 +1,5 @@
+require "colorizr"
+
 class Tribe
   attr_reader :name, :members
 
@@ -8,7 +10,7 @@ class Tribe
   end
 
   def print_tribe_membership
-    puts "A new tribe, #{name}, has been created:"
+    puts "A new tribe, #{name}, has been created:".blue
     puts members
   end
 

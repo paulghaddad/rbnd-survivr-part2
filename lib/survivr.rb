@@ -2,7 +2,7 @@ require_relative "game"
 require_relative "tribe"
 require_relative "contestant"
 require_relative "jury"
-
+require "pry"
 #After your tests pass, uncomment this code below
 #=========================================================
 # # Create an array of twenty hopefuls to compete on the island of Borneo
@@ -30,13 +30,10 @@ end
 
 def phase_two(game)
   merged_tribe = game.tribes.first
+  immune_contestant = immune_contestant_from_merged_tribe(game)
 
   3.times do
-    contestents_eligible_for_elimination = merged_tribe.members.reject do |contestant|
-      contestant == immune_contestant_from_merged_tribe(game)
-    end
-
-    eliminated_contestant = contestents_eligible_for_elimination.sample
+    eliminated_contestant = eliminated_contestant_from_merged_tribe(merged_tribe, immune_contestant)
     eliminate_contestant(merged_tribe, eliminated_contestant)
   end
 end
@@ -51,8 +48,15 @@ def phase_three(game, jury)
 
     eliminated_contestant = contestents_eligible_for_elimination.sample
     jury.add_member(eliminated_contestant)
-    merged_tribe.members.delete(eliminated_contestant)
+    eliminate_contestant(merged_tribe, eliminated_contestant)
   end
+end
+
+def eliminated_contestant_from_merged_tribe(tribe, immune_contestant)
+  contestents_eligible_for_elimination = tribe.members.reject do |contestant|
+    contestant == immune_contestant
+  end
+  contestents_eligible_for_elimination.sample
 end
 
 def tribal_council(losing_tribe, immune_contestant)

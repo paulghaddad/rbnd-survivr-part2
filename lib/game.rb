@@ -1,4 +1,3 @@
-require "pry"
 class Game
   attr_reader :merged_tribe
   attr_accessor :tribes
@@ -20,7 +19,7 @@ class Game
   end
 
   def merge(merged_tribe_name)
-    merged_tribe = Tribe.new(name: merged_tribe_name, members: all_game_contestants)
+    merged_tribe = create_tribe(merged_tribe_name)
     clear_tribes
     add_tribe(merged_tribe)
     merged_tribe
@@ -36,5 +35,9 @@ class Game
     tribes.inject([]) do |members, tribe|
       members += tribe.members
     end
+  end
+
+  def create_tribe(name)
+    Tribe.new(name: name, members: all_game_contestants)
   end
 end

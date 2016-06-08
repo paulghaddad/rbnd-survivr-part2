@@ -11,8 +11,7 @@ class Jury
 
   def cast_votes(finalists)
     members.inject(Hash.new(0)) do |finalist_votes, jury_member|
-      vote = finalists.sample
-      puts vote
+      vote = cast_vote(finalists)
       finalist_votes[vote] += 1
 
       finalist_votes
@@ -26,14 +25,20 @@ class Jury
   end
 
   def announce_winner(finalist_votes)
-    member_with_most_votes(finalist_votes).first
+    member_with_most_votes(finalist_votes)
   end
 
   private
 
+  def cast_vote(finalists)
+    vote = finalists.sample
+    puts vote
+    vote
+  end
+
   def member_with_most_votes(finalist_votes)
     finalist_votes.max_by do |finalist, votes|
       votes
-    end
+    end.first
   end
 end

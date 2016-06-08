@@ -1,5 +1,5 @@
 class Tribe
-  attr_reader :name, :members, :immune_member
+  attr_reader :name, :members
 
   def initialize(options = {})
     @name = options.fetch(:name)
@@ -17,15 +17,14 @@ class Tribe
   end
 
   def tribal_council(immune:)
-    @immune_member = immune
-    members_not_immune.sample
+    members_not_immune(immune).sample
   end
 
   private
 
-  def members_not_immune
+  def members_not_immune(immune)
     members.reject do |member|
-      member == immune_member
+      member == immune
     end
   end
 end

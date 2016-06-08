@@ -20,55 +20,68 @@ require_relative "jury"
 
 #This is where you will write your code for the three phases
 def phase_one(game)
-  eliminated_contestants = 0
   8.times do
-    tribe_with_immunity = game.immunity_challenge
-
-    tribe_for_tribal_council = game.tribes.reject do |tribe|
-      tribe == tribe_with_immunity
-    end
-
-    immune_contestant = tribe_for_tribal_council[0].members.sample
-    eliminated_contestant = tribe_for_tribal_council[0].tribal_council(immune: immune_contestant)
-    tribe_for_tribal_council[0].members.delete(eliminated_contestant)
-    eliminated_contestants += 1
+    losing_tribe = tribe_for_tribal_council(game)
+    immune_contestant = immune_contestant_from_losing_tribe(losing_tribe)
+    eliminated_contestant = tribal_council(losing_tribe, immune_contestant)
+    eliminate_contestant(losing_tribe, eliminated_contestant)
   end
-  eliminated_contestants
 end
 
 def phase_two(game)
   merged_tribe = game.tribes.first
-  eliminated_contestants = 0
+
   3.times do
-    immune_contestant = game.individual_immunity_challenge
     contestents_eligible_for_elimination = merged_tribe.members.reject do |contestant|
-      contestant == immune_contestant
+      contestant == immune_contestant_from_merged_tribe(game)
     end
 
     eliminated_contestant = contestents_eligible_for_elimination.sample
-    merged_tribe.members.delete(eliminated_contestant)
-    eliminated_contestants += 1
+    eliminate_contestant(merged_tribe, eliminated_contestant)
   end
-  eliminated_contestants
 end
 
 def phase_three(game, jury)
   merged_tribe = game.tribes.first
-  eliminated_contestants = 0
+
   7.times do
-    immune_contestant = game.individual_immunity_challenge
     contestents_eligible_for_elimination = merged_tribe.members.reject do |contestant|
-      contestant == immune_contestant
+      contestant == immune_contestant_from_merged_tribe(game)
     end
 
     eliminated_contestant = contestents_eligible_for_elimination.sample
     jury.add_member(eliminated_contestant)
     merged_tribe.members.delete(eliminated_contestant)
-    eliminated_contestants += 1
   end
-  eliminated_contestants
 end
 
+def tribal_council(losing_tribe, immune_contestant)
+  losing_tribe.tribal_council(immune: immune_contestant)
+end
+
+def immune_contestant_from_losing_tribe(tribe)
+  tribe.members.sample
+end
+
+def immune_contestant_from_merged_tribe(game)
+  game.individual_immunity_challenge
+end
+
+def tribe_with_immunity(game)
+  game.immunity_challenge
+end
+
+def tribe_for_tribal_council(game)
+  tribe_with_immunity = tribe_with_immunity(game)
+
+  game.tribes.reject do |tribe|
+    tribe == tribe_with_immunity
+  end.first
+end
+
+def eliminate_contestant(tribe, contestant)
+  tribe.members.delete(contestant)
+end
 
 # If all the tests pass, the code below should run the entire simulation!!
 #=========================================================
